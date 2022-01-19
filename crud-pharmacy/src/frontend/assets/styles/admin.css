@@ -1,0 +1,15 @@
+.admin_home-header {
+    padding: 2rem;
+    text-align: center;
+}
+
+.admin_home-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.admin_home-actionButton {
+    padding: 0.5rem;
+    margin: 0.5rem 0 0.5rem 0;
+}

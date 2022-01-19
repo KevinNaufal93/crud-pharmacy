@@ -20,10 +20,10 @@ export class Home extends React.Component {
     render() {
         return (
             <div>
-                <div className="home-header">
-                    Welcome to Kevin's Apothecary Website
+                <div className="home_login-header">
+                    <h2>Welcome to Kevin's Apothecary Website</h2>
                 </div>
-                <Form className="home-login-form">
+                <Form className="home_login-form">
                     <FormGroup>
                         <Label for="userEmail">Email</Label>
                         <Input type="email" name="email" placeholder="enter your email" onChange={this.inputHandler}/>
