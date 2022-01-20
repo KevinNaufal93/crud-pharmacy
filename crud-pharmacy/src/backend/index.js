@@ -3,7 +3,7 @@ const cors = require("cors");
 const bearerToken = require("express-bearer-token");
 const bodyParser = require("body-parser");
 
-const port = process.env.PORT || 2700; //port
+const port = 2700;
 const app = express();
 
 app.use(cors());
@@ -14,10 +14,15 @@ app.use("/public", express.static("public"));
 app.use(express.static('public'))
 
 const {
-    loginRouter,
+    singleRouter,
+    stockRouter,
     } = require("./routers");
 
-app.use("/login", loginRouter);
-app.use("/keepLoggedIn", loginRouter);
+    
+app.use("/apothecary", singleRouter);
+app.use("/search", singleRouter);
+app.use("/stock", stockRouter)
+app.use("/login", singleRouter);
+app.use("/keepLoggedIn", singleRouter);
 
 app.listen(port, () => console.log(`Server running in port`, port));

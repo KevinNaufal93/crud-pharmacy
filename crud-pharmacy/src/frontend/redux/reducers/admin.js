@@ -1,7 +1,8 @@
 const init_state = {
 
-  username: "",
-  password: "",
+  namaAdmin: "",
+  passwordAdmin: "",
+  role: "",
   kodeObat: "",
   namaObat: "",
   hargaObat: "",

@@ -1,6 +1,9 @@
 
-const loginRouter = require("./loginRouter");
+const stockRouter = require("./stockRouter");
+const singleRouter = require("./singleRouter");
+
 
 module.exports = {
-  loginRouter,
+  singleRouter,
+  stockRouter
 };

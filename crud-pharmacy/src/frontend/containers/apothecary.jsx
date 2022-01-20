@@ -3,15 +3,18 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import '../assets/styles/adminManagement.css';
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { API_URL } from "../constants/API";
+import Axios from 'axios';
 
 export class Apothecary extends React.Component {
   state = {
     apothecaryList: "",
     apothecarySearch: "",
+    listPlaceHolder: "No Staff rendered yet"
   }
 
   componentWillMount() {
-    if(this.props.adminGlobal.namaAdmin){
+    if(this.props.adminGlobal.role === 'admin'){
         console.log("authorized")
     } else {
         this.redirectHandler();
@@ -29,6 +32,44 @@ export class Apothecary extends React.Component {
     console.log(this.state)
   }
 
+  searchAll = () => {
+      Axios.get(API_URL + "/search/all", {
+      })
+        .then((res) => {
+          alert("Search finished");
+          console.log(res.data[0]);
+            this.setState({ 
+              apothecaryList: res.data,
+            })
+            this.renderApothecaryList()
+        })
+        .catch((err) => {
+          alert("Search failed");
+          console.log(err);
+        });
+      };
+
+  renderApothecaryList = () => {
+    if(this.state.apothecaryList[0]){
+    
+    return this.state.apothecaryList.map((val)=>{
+      console.log(val.namaApoteker)
+      return(
+        <tr>
+          <td>{val.namaApoteker}</td>
+          <td>{val.kodeApoteker}</td>
+        </tr>
+      )
+    })
+  } else {
+        return(
+          <div>
+            Nothing here
+          </div> 
+        )
+      }
+    }
+
   render() {
 
     const { redirect } = this.state;
@@ -44,7 +85,18 @@ export class Apothecary extends React.Component {
         <Form className="admin_mgmt-actions">
             <FormGroup>
               <Label for="read_apothecary">Read</Label>
-              <Button className="admin_mgmt-actionButton">See All Apothecary</Button>
+              <Button className="admin_mgmt-actionButton" onClick={()=>{this.searchAll()}}>See All Apothecary</Button>
+              <table className="table" style={{width:'100%', height:'100%'}}>
+              <thead className="table" >
+                <tr>
+                  <th scope="col">Nama</th>
+                  <th scope="col">Kode</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.renderApothecaryList()}
+              </tbody> 
+              </table>
             </FormGroup>
             <FormGroup>
               <Label for="add_apothecary">Create</Label>
@@ -68,4 +120,14 @@ export class Apothecary extends React.Component {
   }
 }
 
-export default Apothecary
+const mapStateToProps = (state) => {
+  return {
+      adminGlobal: state.admin,
+  }
+}
+
+const mapDispatchToProps = {
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Apothecary);

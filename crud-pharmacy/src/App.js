@@ -1,7 +1,6 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import React from "react";
-import { connect } from "react-redux";  
 import Home from "./frontend/containers/home";
 import AdminHome from "./frontend/containers/adminHome";
 import Inbound from "./frontend/containers/inbound";

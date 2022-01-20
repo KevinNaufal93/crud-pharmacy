@@ -12,6 +12,14 @@ export class Home extends React.Component {
         password: ""
     }
 
+    componentWillMount() {
+        if(this.props.adminGlobal.role === 'admin'){
+            this.redirectHandler();
+        } else {
+            console.log("authorized")
+        }
+      }
+
     inputHandler = (event) => {
         const value = event.target.value;
         const name = event.target.name;

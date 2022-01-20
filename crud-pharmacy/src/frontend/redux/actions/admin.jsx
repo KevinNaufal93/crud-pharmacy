@@ -8,7 +8,6 @@ export const loginAction = (data) => {
         passwordAdmin: data.password,
       })
         .then((res) => {
-          console.log(`res datalogin is ${res.data.dataLogin}`);
           //delete res.data.dataLogin.password;
           localStorage.setItem("adminDataXYZ", res.data.token);
           dispatch({
@@ -33,8 +32,7 @@ export const loginAction = (data) => {
       })
         .then((res) => {
           console.log(res)
-          // delete res.data[0].password;
-          // localStorage.setItem("adminDataXYZ", JSON.stringify(res.data[0]));
+          // delete res.data.passwordAdmin;
           dispatch({
             type: "USER_LOGIN",
             payload: res.data[0],
@@ -51,4 +49,21 @@ export const loginAction = (data) => {
     return {
       type: "USER_LOGOUT",
     };
+  };
+
+  export const addApothecary = (data) => {
+    console.log(data);
+    return (dispatch) => {
+      Axios.post(API_URL + "/apothecary/add", {
+        namaApoteker: data.namaApoteker,
+        kodeApoteker: data.kodeApoteker,
+      })
+        .then((res) => {
+          alert("Apothecary successfully added");
+        })
+        .catch((err) => {
+          alert("Apothecary  Registration failed");
+          console.log(err);
+        });
+      };
   };

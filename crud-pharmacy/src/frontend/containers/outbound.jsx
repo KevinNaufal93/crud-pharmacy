@@ -3,6 +3,9 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import '../assets/styles/adminManagement.css';
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { API_URL } from "../constants/API";
+import Axios from 'axios';
+
 
 export class Outbound extends React.Component {
   state = {
@@ -10,7 +13,8 @@ export class Outbound extends React.Component {
     namaObat: "",
     hargaObat: "",
     sisaObat: "",
-    tanggalObat:""
+    tanggalObat:"",
+    transactionSearch:""
   }
 
   componentWillMount() {
@@ -32,6 +36,44 @@ export class Outbound extends React.Component {
     console.log(this.state)
   }
 
+  searchAllTransaction = () => {
+    Axios.get(API_URL + "/stock/out", {
+    })
+      .then((res) => {
+        alert("Search finished");
+        console.log(res.data[0]);
+          this.setState({ 
+            transactionSearch: res.data,
+          })
+          this.renderOutboundList()
+      })
+      .catch((err) => {
+        alert("Search failed");
+        console.log(err);
+      });
+    };
+
+    renderOutboundList = () => {
+      if(this.state.transactionSearch[0]){
+      
+      return this.state.transactionSearch.map((val)=>{
+        console.log(val.kodeObat)
+        return(
+          <tr>
+            <td>{val.kodeObat}</td>
+            <td>{val.jumlahJual}</td>
+          </tr>
+        )
+      })
+    } else {
+          return(
+            <div>
+              Nothing here
+            </div> 
+          )
+        }
+      }
+
   render() {
 
     const { redirect } = this.state;
@@ -48,7 +90,18 @@ export class Outbound extends React.Component {
         <Form className="admin_mgmt-actions">
             <FormGroup>
                 <Label for="read_stock">Read</Label>
-                <Button className="admin_mgmt-actionButton">See All Transactions</Button>
+                <Button className="admin_mgmt-actionButton" onClick={()=>{this.searchAllTransaction()}}>See All Transactions</Button>
+                  <table className="table" style={{width:'100%', height:'100%'}}>
+                  <thead className="table" >
+                    <tr>
+                      <th scope="col">Kode</th>
+                      <th scope="col">Jumlah Jual</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.renderOutboundList()}
+                  </tbody> 
+                  </table>
             </FormGroup>    
             <FormGroup>
                 <Label for="create_stock">Create</Label>
@@ -76,4 +129,14 @@ export class Outbound extends React.Component {
   }
 }
 
-export default Outbound;
+const mapStateToProps = (state) => {
+  return {
+      adminGlobal: state.admin,
+  }
+}
+
+const mapDispatchToProps = {
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Outbound);

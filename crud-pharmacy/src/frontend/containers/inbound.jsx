@@ -3,17 +3,22 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import '../assets/styles/adminManagement.css';
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { API_URL } from "../constants/API";
+import Axios from 'axios';
+
+
 
 export class Inbound extends React.Component {
   state = {
     kodeObat: "",
     namaObat: "",
     hargaObat: "",
-    sisaObat: ""
+    sisaObat: "",
+    searchStock:""
   }
 
   componentWillMount() {
-    if(this.props.adminGlobal.namaAdmin){
+    if(this.props.adminGlobal.role === 'admin'){
         console.log("authorized")
     } else {
         this.redirectHandler();
@@ -31,6 +36,46 @@ export class Inbound extends React.Component {
     console.log(this.state)
   }
 
+  searchAllStock = () => {
+    Axios.get(API_URL + "/stock/in", {
+    })
+      .then((res) => {
+        alert("Search finished");
+        console.log(res.data[0]);
+          this.setState({ 
+            searchStock: res.data,
+          })
+          this.renderInboundList()
+      })
+      .catch((err) => {
+        alert("Search failed");
+        console.log(err);
+      });
+    };
+
+  renderInboundList = () => {
+    if(this.state.searchStock[0]){
+    
+    return this.state.searchStock.map((val)=>{
+      console.log(val.kodeObat)
+      return(
+        <tr>
+          <td>{val.kodeObat}</td>
+          <td>{val.namaObat}</td>
+          <td>{val.hargaObat}</td>
+          <td>{val.sisaObat}</td>
+        </tr>
+      )
+    })
+  } else {
+        return(
+          <div>
+            Nothing here
+          </div> 
+        )
+      }
+    }
+
   render() {
 
     const { redirect } = this.state;
@@ -46,7 +91,20 @@ export class Inbound extends React.Component {
         <Form className="admin_mgmt-actions">
             <FormGroup>
                 <Label for="read_stock">Read</Label>
-                <Button className="admin_mgmt-actionButton">See All Inbound Stock</Button>
+                <Button className="admin_mgmt-actionButton" onClick={()=>{this.searchAllStock()}}>See All Inbound Stock</Button>
+                <table className="table" style={{width:'100%', height:'100%'}}>
+              <thead className="table" >
+                <tr>
+                  <th scope="col">Kode</th>
+                  <th scope="col">Nama</th>
+                  <th scope="col">Harga</th>
+                  <th scope="col">Sisa</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.renderInboundList()}
+              </tbody> 
+              </table>
             </FormGroup>    
             <FormGroup>
                 <Label for="create_stock">Create</Label>
@@ -74,4 +132,14 @@ export class Inbound extends React.Component {
   }
 }
 
-export default Inbound;
+const mapStateToProps = (state) => {
+  return {
+      adminGlobal: state.admin,
+  }
+}
+
+const mapDispatchToProps = {
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Inbound);
