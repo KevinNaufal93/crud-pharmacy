@@ -5,6 +5,7 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { API_URL } from "../constants/API";
 import Axios from 'axios';
+import { addApothecary } from "../redux/actions/admin"; 
 
 export class Apothecary extends React.Component {
   state = {
@@ -102,7 +103,8 @@ export class Apothecary extends React.Component {
               <Label for="add_apothecary">Create</Label>
               <Input type="text" name="namaApoteker" placeholder="Please type his/her name" onChange={this.inputHandler} />
               <Input type="text" name="kodeApoteker" placeholder="Please type his/her ID" onChange={this.inputHandler} />
-              <Button className="admin_mgmt-actionButton">Add Apothecary</Button>
+              <Input type="date" name="tglLahirApoteker" placeholder="Please type his/her Birth date" onChange={this.inputHandler} />
+              <Button className="admin_mgmt-actionButton" onClick={()=>{this.props.addApothecary(this.state)}}>Add Apothecary</Button>
             </FormGroup>
             <FormGroup>
               <Label for="edit_apothecary">Update</Label>
@@ -127,7 +129,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-
+  addApothecary
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Apothecary);

@@ -5,6 +5,7 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { API_URL } from "../constants/API";
 import Axios from 'axios';
+import { addTransaction } from "../redux/actions/admin"; 
 
 
 export class Outbound extends React.Component {
@@ -105,12 +106,12 @@ export class Outbound extends React.Component {
             </FormGroup>    
             <FormGroup>
                 <Label for="create_stock">Create</Label>
+                <Input type="text" name="idTransaksi" placeholder="Please input the transactions ID" onChange={this.inputHandler} />
                 <Input type="text" name="kodeObat" placeholder="Please type medicine ID" onChange={this.inputHandler} />
-                <Input type="text" name="namaObat" placeholder="Please type name of medicine" onChange={this.inputHandler} />
-                <Input type="number" name="hargaObat" placeholder="Please type the price of medicine" onChange={this.inputHandler} />
-                <Input type="number" name="sisaObat" placeholder="Please input the inbound stock" onChange={this.inputHandler} />
-                <Input type="date" name="tanggalObat" placeholder="Please type the date of medicine" onChange={this.inputHandler} />
-                <Button className="admin_mgmt-actionButton">Add Transaction</Button>
+                <Input type="text" name="jumlahJual" placeholder="Please input the amount sold" onChange={this.inputHandler} />
+                <Input type="text"  name="kodeApoteker" placeholder="Please type the id of apothecary in charge" onChange={this.inputHandler} />
+                <Input type="date" name="tanggalBeli" placeholder="Please type the date of transactions" onChange={this.inputHandler} />
+                <Button className="admin_mgmt-actionButton" onClick={()=>{this.props.addTransaction(this.state)}}>Add Transaction</Button>
             </FormGroup>
             <FormGroup>
                 <Label for="update_stock">Update</Label>
@@ -136,7 +137,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-
+  addTransaction
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Outbound);

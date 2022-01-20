@@ -57,12 +57,53 @@ export const loginAction = (data) => {
       Axios.post(API_URL + "/apothecary/add", {
         namaApoteker: data.namaApoteker,
         kodeApoteker: data.kodeApoteker,
+        tanggalLahir: data.tglLahirApoteker
       })
         .then((res) => {
           alert("Apothecary successfully added");
         })
         .catch((err) => {
           alert("Apothecary  Registration failed");
+          console.log(err);
+        });
+      };
+  };
+
+  export const addDrugs = (data) => {
+    console.log(data);
+    return (dispatch) => {
+      Axios.post(API_URL + "/stock/add", {
+        namaObat: data.namaObat,
+        kodeObat: data.kodeObat,
+        hargaObat: data.hargaObat,
+        sisaObat : data.sisaObat,
+        tanggalObat : data.tanggalObat
+      })
+        .then((res) => {
+          alert("Drug stock successfully added");
+        })
+        .catch((err) => {
+          alert("Drug stock  Registration failed");
+          console.log(err);
+        });
+      };
+  };
+
+  export const addTransaction = (data) => {
+    console.log(data);
+    return (dispatch) => {
+      Axios.post(API_URL + "/stock/sold", {
+        idTransaksi: data.idTransaksi,
+        kodeObat: data.kodeObat,
+        jumlahJual: data.jumlahJual,
+        kodeApoteker : data.kodeApoteker,
+        tanggalBeli : data.tanggalBeli
+      })
+        .then((res) => {
+          alert("Transaction successfully added");
+        })
+        .catch((err) => {
+          alert("Transaction Registration failed");
           console.log(err);
         });
       };
