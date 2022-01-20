@@ -67,6 +67,22 @@ module.exports = {
         }) 
     },
 
+    updateApothecary: (req,res) => {
+        let { namaApoteker, kodeApoteker, } = req.body;
+        console.log(`API updating for ${kodeApoteker}`)
+        let updateQuery = `UPDATE tabel_apoteker SET 
+        namaApoteker = ${db.escape(namaApoteker)}
+        WHERE kodeApoteker = ${db.escape(kodeApoteker)};`;
+        db.query(updateQuery, (err, result) => {
+            //console.log(scriptQuery, result)
+            if (err) {
+                return res.send({err, message: "update result error"})
+            } else {
+                return res.send({err, message: "update success"})
+            }
+        })
+    },
+
     deleteApothecary: (req, res) => {
         let { kodeApoteker } = req.body
         let deleteQuery = `DELETE FROM tabel_apoteker WHERE kodeApoteker = ${db.escape(kodeApoteker)};`
@@ -103,6 +119,22 @@ module.exports = {
         }) 
     },
 
+    updateStock: (req,res) => {
+        let { sisaObat, kodeObat, } = req.body;
+        console.log(`API updating for ${kodeObat}`)
+        let updateQuery = `UPDATE tabel_obat SET 
+        sisaObat = ${db.escape(sisaObat)}
+        WHERE kodeObat = ${db.escape(kodeObat)};`;
+        db.query(updateQuery, (err, result) => {
+            //console.log(scriptQuery, result)
+            if (err) {
+                return res.send({err, message: "update result error"})
+            } else {
+                return res.send({err, message: "update success"})
+            }
+        })
+    },
+
     deleteStock: (req, res) => {
         let { kodeObat } = req.body
         let deleteQuery = `DELETE FROM tabel_obat WHERE kodeObat = ${db.escape(kodeObat)};`
@@ -137,6 +169,22 @@ module.exports = {
             return res.status(201).send({message: "Stock created"})
             }
         }) 
+    },
+
+    updateTransaction: (req,res) => {
+        let { kodeApoteker, idTransaksi, } = req.body;
+        console.log(`API updating for ${idTransaksi}`)
+        let updateQuery = `UPDATE tabel_transaksi SET 
+        kodeApoteker = ${db.escape(kodeApoteker)}
+        WHERE idTransaksi = ${db.escape(idTransaksi)};`;
+        db.query(updateQuery, (err, result) => {
+            //console.log(scriptQuery, result)
+            if (err) {
+                return res.send({err, message: "update result error"})
+            } else {
+                return res.send({err, message: "update success"})
+            }
+        })
     },
 
     deleteTransaction: (req, res) => {

@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { API_URL } from "../constants/API";
 import Axios from 'axios';
-import { addTransaction, deleteTransaction } from "../redux/actions/admin"; 
+import { addTransaction, deleteTransaction, updateTransaction } from "../redux/actions/admin"; 
 
 
 export class Outbound extends React.Component {
@@ -119,9 +119,9 @@ export class Outbound extends React.Component {
             </FormGroup>
             <FormGroup>
                 <Label for="update_stock">Update</Label>
-                <Input type="text" name="kodeObat" placeholder="Please type medicine ID" onChange={this.inputHandler} />
-                <Input type="text" name="sisaObat" placeholder="Please input the inbound stock" onChange={this.inputHandler} />
-                <Button className="admin_mgmt-actionButton">Update Transaction</Button>
+                <Input type="text" name="idTransaksi" placeholder="Please type the transaction ID" onChange={this.inputHandler} />
+                <Input type="text" name="kodeApoteker" placeholder="Please type the id of apothecary in charge" onChange={this.inputHandler} />
+                <Button className="admin_mgmt-actionButton" onClick={()=>{this.props.updateTransaction(this.state) ; this.refreshPage()}}>Update Transaction</Button>
             </FormGroup>
             <FormGroup>
                 <Label for="delete_stock">Delete</Label>
@@ -142,7 +142,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   addTransaction,
-  deleteTransaction
+  deleteTransaction,
+  updateTransaction
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Outbound);

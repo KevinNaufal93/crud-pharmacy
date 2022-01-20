@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { API_URL } from "../constants/API";
 import Axios from 'axios';
-import { addDrugs, deleteStock } from "../redux/actions/admin"; 
+import { addDrugs, deleteStock, updateStock } from "../redux/actions/admin"; 
 
 
 export class Inbound extends React.Component {
@@ -124,7 +124,7 @@ export class Inbound extends React.Component {
                 <Label for="update_stock">Update</Label>
                 <Input type="text" name="kodeObat" placeholder="Please type medicine ID" onChange={this.inputHandler} />
                 <Input type="text" name="sisaObat" placeholder="Please input the inbound stock" onChange={this.inputHandler} />
-                <Button className="admin_mgmt-actionButton">Update Stock</Button>
+                <Button className="admin_mgmt-actionButton" onClick={()=>{this.props.updateStock(this.state) ; this.refreshPage()}}>Update Transaction</Button>
             </FormGroup>
             <FormGroup>
                 <Label for="delete_stock">Delete</Label>
@@ -145,7 +145,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   addDrugs,
-  deleteStock
+  deleteStock,
+  updateStock
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Inbound);

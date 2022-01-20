@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { API_URL } from "../constants/API";
 import Axios from 'axios';
-import { addApothecary, deleteApothecary } from "../redux/actions/admin"; 
+import { addApothecary, deleteApothecary, updateApothecary } from "../redux/actions/admin"; 
 
 export class Apothecary extends React.Component {
   state = {
@@ -114,7 +114,7 @@ export class Apothecary extends React.Component {
               <Label for="edit_apothecary">Update</Label>
               <Input type="text" name="kodeApoteker" placeholder="Please type his/her ID" onChange={this.inputHandler} />
               <Input type="text" name="namaApoteker" placeholder="Please type his/her name" onChange={this.inputHandler} />
-              <Button className="admin_mgmt-actionButton">Update Apothecary</Button>
+              <Button className="admin_mgmt-actionButton" onClick={()=>{this.props.updateApothecary(this.state) ; this.refreshPage()}}>Update Apothecary</Button>
             </FormGroup>
             <FormGroup>
               <Label for="delete_apothecary">Delete</Label>
@@ -135,7 +135,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   addApothecary,
-  deleteApothecary
+  deleteApothecary,
+  updateApothecary
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Apothecary);

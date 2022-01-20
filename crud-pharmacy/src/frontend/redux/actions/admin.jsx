@@ -69,6 +69,23 @@ export const loginAction = (data) => {
       };
   };
 
+  export const updateApothecary = (data) => {
+    console.log(data);
+    return (dispatch) => {
+      Axios.post(API_URL + "/apothecary/updateApothecary", {
+        namaApoteker: data.namaApoteker,
+        kodeApoteker: data.kodeApoteker,
+      })
+        .then((res) => {
+          alert("Apothecary successfully updated");
+        })
+        .catch((err) => {
+          alert("Apothecary Registration failed");
+          console.log(err);
+        });
+      };
+  };
+
   export const deleteApothecary = (data) => {
     console.log(data);
     return (dispatch) => {
@@ -105,6 +122,23 @@ export const loginAction = (data) => {
       };
   };
 
+  export const updateStock = (data) => {
+    console.log(data);
+    return (dispatch) => {
+      Axios.post(API_URL + "/stock/updateStock", {
+        sisaObat: data.sisaObat,
+        kodeObat: data.kodeObat,
+      })
+        .then((res) => {
+          alert("Stock successfully updated");
+        })
+        .catch((err) => {
+          alert("Stock Registration failed");
+          console.log(err);
+        });
+      };
+  };
+
   export const deleteStock = (data) => {
     console.log(data);
     return (dispatch) => {
@@ -133,6 +167,23 @@ export const loginAction = (data) => {
       })
         .then((res) => {
           alert("Transaction successfully added");
+        })
+        .catch((err) => {
+          alert("Transaction Registration failed");
+          console.log(err);
+        });
+      };
+  };
+
+  export const updateTransaction = (data) => {
+    console.log(data);
+    return (dispatch) => {
+      Axios.post(API_URL + "/stock/updateTransaction", {
+        idTransaksi: data.idTransaksi,
+        kodeApoteker: data.kodeApoteker,
+      })
+        .then((res) => {
+          alert("Transaction successfully updated");
         })
         .catch((err) => {
           alert("Transaction Registration failed");
