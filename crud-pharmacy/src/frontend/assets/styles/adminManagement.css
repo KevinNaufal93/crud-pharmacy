@@ -1,3 +1,8 @@
+body {
+    background-color: #064663;
+    color: #ECB365
+}
+
 .admin_mgmt-header {
     padding: 2rem;
     text-align: center;

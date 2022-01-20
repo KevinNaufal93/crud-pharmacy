@@ -1,11 +1,25 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import '../assets/styles/adminManagement.css';
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
 export class Apothecary extends React.Component {
   state = {
     apothecaryList: "",
     apothecarySearch: "",
+  }
+
+  componentWillMount() {
+    if(this.props.adminGlobal.namaAdmin){
+        console.log("authorized")
+    } else {
+        this.redirectHandler();
+    }
+  }
+
+  redirectHandler = () => {
+    this.setState({redirect: true})
   }
 
   inputHandler = (event) => {
@@ -16,6 +30,12 @@ export class Apothecary extends React.Component {
   }
 
   render() {
+
+    const { redirect } = this.state;
+    if(redirect) {
+        return <Redirect to="/"/>
+    }
+
     return (
     <div>
         <div className="admin_mgmt-header">

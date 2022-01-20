@@ -1,12 +1,14 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import '../assets/styles/home.css';
+import { connect } from "react-redux";
+import { loginAction } from "../redux/actions/admin";  
 
 export class Home extends React.Component {
 
     state = {
-        email: "",
+        username: "",
         password: ""
     }
 
@@ -14,29 +16,51 @@ export class Home extends React.Component {
         const value = event.target.value;
         const name = event.target.name;
         this.setState({ [name]: value })
-        console.log(this.state)
+        //console.log(this.state)
+    }
+
+    redirectHandler = () => {
+        this.setState({redirect: true})
     }
 
     render() {
+
+        const { redirect } = this.state;
+        if(redirect) {
+            return <Redirect to="/home"/>
+        }
+
+        //console.log(this.state)
+
         return (
             <div>
                 <div className="home_login-header">
-                    <h2>Welcome to Kevin's Apothecary Website</h2>
+                    <h2>XYZ Pharmacy Management</h2>
                 </div>
                 <Form className="home_login-form">
                     <FormGroup>
-                        <Label for="userEmail">Email</Label>
-                        <Input type="email" name="email" placeholder="enter your email" onChange={this.inputHandler}/>
+                        <Label for="username">Username</Label>
+                        <Input type="text" name="username" placeholder="enter your username" onChange={this.inputHandler}/>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="userPassword">Password</Label>
+                        <Label for="password">Password</Label>
                         <Input type="password" name="password" placeholder="enter your password" onChange={this.inputHandler}/>
                     </FormGroup>
-                    <Button>Login Now!</Button>
+                    <Button onClick={()=>{this.props.loginAction(this.state) ; this.redirectHandler()}}>Login Now!</Button>
                 </Form>
             </div>
         )
     }
 }
 
-export default Home
+const mapStateToProps = (state) => {
+    return {
+        adminGlobal: state.admin,
+    }
+}
+
+const mapDispatchToProps = {
+    loginAction,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

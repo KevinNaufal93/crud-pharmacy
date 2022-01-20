@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button } from 'reactstrap';
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import { logoutAction } from "../redux/actions/admin"; 
+import { connect } from "react-redux";
 import '../assets/styles/admin.css';
 
 export class AdminHome extends React.Component {
@@ -15,7 +17,17 @@ export class AdminHome extends React.Component {
         console.log(this.state)
     }
 
+    redirectHandler = () => {
+        this.setState({redirect: true})
+    }
+
     render() {
+
+        const { redirect } = this.state;
+        if(redirect) {
+            return <Redirect to="/"/>
+        }
+
         return (
             <div>
                 <div className="admin_home-header">
@@ -26,10 +38,21 @@ export class AdminHome extends React.Component {
                     <Button className="admin_home-actionButton">Outbound Stock</Button>
                     <Button className="admin_home-actionButton">Stock Report</Button>
                     <Button className="admin_home-actionButton">Apothecary Management</Button>
+                    <Button className="admin_home-actionButton" onClick={()=>{this.props.logoutAction(this.state) ; this.redirectHandler()}}>Log Out</Button>
                 </div>
             </div>
         )
     }
 }
 
-export default AdminHome
+const mapStateToProps = (state) => {
+    return {
+        adminGlobal: state.admin,
+    }
+}
+
+const mapDispatchToProps = {
+    logoutAction,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminHome);

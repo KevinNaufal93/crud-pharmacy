@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import React from "react";
 import { connect } from "react-redux";  
@@ -15,14 +15,14 @@ class App extends React.Component {
     render () {
       return (
       <BrowserRouter>
-        <Routes>
-          <Route path='/home' element={<AdminHome/>} />
-          <Route path='/ibd' element={<Inbound/>} />
-          <Route path='/obd' element={<Outbound/>} />
-          <Route path='/stk' element={<Stock/>} />
-          <Route path='/apth' element={<Apothecary/>} />
-          <Route path='/' element={<Home/>} />
-        </Routes>
+        <Switch>
+          <Route path='/home' component={AdminHome} />
+          <Route path='/ibd' component={Inbound} />
+          <Route path='/obd' component={Outbound} />
+          <Route path='/stk' component={Stock} />
+          <Route path='/apth' component={Apothecary} />
+          <Route path='/' component={Home} />
+        </Switch>
       </BrowserRouter>
       )
     }
