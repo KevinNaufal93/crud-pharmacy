@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { API_URL } from "../constants/API";
 import Axios from 'axios';
-import { addDrugs } from "../redux/actions/admin"; 
+import { addDrugs, deleteStock } from "../redux/actions/admin"; 
 
 
 export class Inbound extends React.Component {
@@ -27,6 +27,10 @@ export class Inbound extends React.Component {
 
   redirectHandler = () => {
     this.setState({redirect: true})
+  }
+
+  refreshPage = () => {
+    window.location.reload(false);
   }
 
   inputHandler = (event) => {
@@ -114,7 +118,7 @@ export class Inbound extends React.Component {
                 <Input type="number" name="hargaObat" placeholder="Please type the price of medicine" onChange={this.inputHandler} />
                 <Input type="number" name="sisaObat" placeholder="Please input the inbound stock" onChange={this.inputHandler} />
                 <Input type="date" name="tanggalObat" placeholder="Please type the date of medicine" onChange={this.inputHandler} />
-                <Button className="admin_mgmt-actionButton" onClick={()=>{this.props.addDrugs(this.state)}}>Add Inbound Stock</Button>
+                <Button className="admin_mgmt-actionButton" onClick={()=>{this.props.addDrugs(this.state) ; this.refreshPage()}}>Add Inbound Stock</Button>
             </FormGroup>
             <FormGroup>
                 <Label for="update_stock">Update</Label>
@@ -125,7 +129,7 @@ export class Inbound extends React.Component {
             <FormGroup>
                 <Label for="delete_stock">Delete</Label>
                 <Input type="text" name="kodeObat" placeholder="Please type medicine ID" onChange={this.inputHandler} />
-                <Button className="admin_mgmt-actionButton">Delete Stock</Button>
+                <Button className="admin_mgmt-actionButton" onClick={()=>{this.props.deleteStock(this.state) ; this.refreshPage()}}>Delete Stock</Button>
             </FormGroup>
         </Form>
     </div>
@@ -140,7 +144,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  addDrugs
+  addDrugs,
+  deleteStock
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Inbound);

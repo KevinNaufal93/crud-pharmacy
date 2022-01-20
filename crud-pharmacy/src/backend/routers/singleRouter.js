@@ -6,8 +6,8 @@ const { auth } = require('../helper/auth');
 
 router.post("/", adminController.loginAdmin);
 router.post("/add", adminTask.addApothecary);
+router.post("/delete", adminTask.deleteApothecary);
 router.get("/keep", auth, adminController.keepLogin);
 router.get("/all", adminTask.searchAll);
-
 
 module.exports = router;

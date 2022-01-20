@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { API_URL } from "../constants/API";
 import Axios from 'axios';
-import { addTransaction } from "../redux/actions/admin"; 
+import { addTransaction, deleteTransaction } from "../redux/actions/admin"; 
 
 
 export class Outbound extends React.Component {
@@ -53,6 +53,10 @@ export class Outbound extends React.Component {
         console.log(err);
       });
     };
+
+    refreshPage = () => {
+      window.location.reload(false);
+    }
 
     renderOutboundList = () => {
       if(this.state.transactionSearch[0]){
@@ -111,7 +115,7 @@ export class Outbound extends React.Component {
                 <Input type="text" name="jumlahJual" placeholder="Please input the amount sold" onChange={this.inputHandler} />
                 <Input type="text"  name="kodeApoteker" placeholder="Please type the id of apothecary in charge" onChange={this.inputHandler} />
                 <Input type="date" name="tanggalBeli" placeholder="Please type the date of transactions" onChange={this.inputHandler} />
-                <Button className="admin_mgmt-actionButton" onClick={()=>{this.props.addTransaction(this.state)}}>Add Transaction</Button>
+                <Button className="admin_mgmt-actionButton" onClick={()=>{this.props.addTransaction(this.state); this.refreshPage()}}>Add Transaction</Button>
             </FormGroup>
             <FormGroup>
                 <Label for="update_stock">Update</Label>
@@ -121,8 +125,8 @@ export class Outbound extends React.Component {
             </FormGroup>
             <FormGroup>
                 <Label for="delete_stock">Delete</Label>
-                <Input type="text" name="kodeObat" placeholder="Please type medicine ID" onChange={this.inputHandler} />
-                <Button className="admin_mgmt-actionButton">Delete Transaction</Button>
+                <Input type="text" name="idTransaksi" placeholder="Please input the transaction ID" onChange={this.inputHandler} />
+                <Button className="admin_mgmt-actionButton" onClick={()=>{this.props.deleteTransaction(this.state) ; this.refreshPage()}}>Delete Transaction</Button>
             </FormGroup>
         </Form>
     </div>
@@ -137,7 +141,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  addTransaction
+  addTransaction,
+  deleteTransaction
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Outbound);

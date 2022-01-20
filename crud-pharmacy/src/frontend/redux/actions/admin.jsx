@@ -69,6 +69,22 @@ export const loginAction = (data) => {
       };
   };
 
+  export const deleteApothecary = (data) => {
+    console.log(data);
+    return (dispatch) => {
+      Axios.post(API_URL + "/apothecary/delete", {
+        kodeApoteker: data.kodeApoteker,
+      })
+        .then((res) => {
+          alert("Apothecary successfully removed");
+        })
+        .catch((err) => {
+          alert("Apothecary failed to remove");
+          console.log(err);
+        });
+      };
+  };
+
   export const addDrugs = (data) => {
     console.log(data);
     return (dispatch) => {
@@ -89,6 +105,22 @@ export const loginAction = (data) => {
       };
   };
 
+  export const deleteStock = (data) => {
+    console.log(data);
+    return (dispatch) => {
+      Axios.post(API_URL + "/stock/delete", {
+        kodeObat: data.kodeObat,
+      })
+        .then((res) => {
+          alert("stock successfully removed");
+        })
+        .catch((err) => {
+          alert("stock failed to remove");
+          console.log(err);
+        });
+      };
+  };
+
   export const addTransaction = (data) => {
     console.log(data);
     return (dispatch) => {
@@ -104,6 +136,22 @@ export const loginAction = (data) => {
         })
         .catch((err) => {
           alert("Transaction Registration failed");
+          console.log(err);
+        });
+      };
+  };
+
+  export const deleteTransaction = (data) => {
+    console.log(data);
+    return (dispatch) => {
+      Axios.post(API_URL + "/stock/remove", {
+        idTransaksi: data.idTransaksi,
+      })
+        .then((res) => {
+          alert("transaction successfully removed");
+        })
+        .catch((err) => {
+          alert("transaction failed to remove");
           console.log(err);
         });
       };

@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { API_URL } from "../constants/API";
 import Axios from 'axios';
-import { addApothecary } from "../redux/actions/admin"; 
+import { addApothecary, deleteApothecary } from "../redux/actions/admin"; 
 
 export class Apothecary extends React.Component {
   state = {
@@ -20,6 +20,10 @@ export class Apothecary extends React.Component {
     } else {
         this.redirectHandler();
     }
+  }
+
+  refreshPage = () => {
+    window.location.reload(false);
   }
 
   redirectHandler = () => {
@@ -104,17 +108,18 @@ export class Apothecary extends React.Component {
               <Input type="text" name="namaApoteker" placeholder="Please type his/her name" onChange={this.inputHandler} />
               <Input type="text" name="kodeApoteker" placeholder="Please type his/her ID" onChange={this.inputHandler} />
               <Input type="date" name="tglLahirApoteker" placeholder="Please type his/her Birth date" onChange={this.inputHandler} />
-              <Button className="admin_mgmt-actionButton" onClick={()=>{this.props.addApothecary(this.state)}}>Add Apothecary</Button>
+              <Button className="admin_mgmt-actionButton" onClick={()=>{this.props.addApothecary(this.state) ; this.refreshPage()}}>Add Apothecary</Button>
             </FormGroup>
             <FormGroup>
               <Label for="edit_apothecary">Update</Label>
               <Input type="text" name="kodeApoteker" placeholder="Please type his/her ID" onChange={this.inputHandler} />
-              <Button className="admin_mgmt-actionButton">Search Apothecary</Button>
+              <Input type="text" name="namaApoteker" placeholder="Please type his/her name" onChange={this.inputHandler} />
+              <Button className="admin_mgmt-actionButton">Update Apothecary</Button>
             </FormGroup>
             <FormGroup>
               <Label for="delete_apothecary">Delete</Label>
               <Input type="text" name="kodeApoteker" placeholder="Please type his/her ID" onChange={this.inputHandler} />
-              <Button className="admin_mgmt-actionButton">Delete Apothecary</Button>
+              <Button className="admin_mgmt-actionButton" onClick={()=>{this.props.deleteApothecary(this.state) ; this.refreshPage()}}>Delete Apothecary</Button>
             </FormGroup>
         </Form>
     </div>
@@ -129,7 +134,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  addApothecary
+  addApothecary,
+  deleteApothecary
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Apothecary);
