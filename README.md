@@ -9,5 +9,7 @@ Apothecary administration web application for Profindo recruitment test. Uses Re
     a. CD to crud-pharmacy ("cd crud-pharmacy")
     b. Type "npm start"
 
+P.S. Database dumps for import is in backend/database folder
+
 That's it!
 Thanks
