@@ -1,5 +1,5 @@
 # crud-pharmacy
-Apothecary administration web application for Profindo recruitment test. Uses React, Node/Express JS and MySQL.
+Apothecary administration web application used for junior developer test, but improved now 😎. Uses React, Node/Express JS and MySQL.
 
 # How to start
 1. Start the backend!
